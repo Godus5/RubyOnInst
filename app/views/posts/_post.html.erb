@@ -1,22 +1,16 @@
 <div id="<%= dom_id post %>">
   <p>
-    <strong>Title:</strong>
-    <%= post.title %>
+    <strong>Text:</strong>
+    <%= post.text %>
   </p>
 
   <p>
-    <strong>Description:</strong>
-    <%= post.description %>
-  </p>
-
-  <p>
-    <strong>User:</strong>
-    <%= post.user_id %>
-  </p>
-
-  <p>
-    <strong>Photo data:</strong>
-    <%= post.photo_data %>
-  </p>
+  <strong>Photo:</strong>
+  <% if post.photo %>
+    <%= image_tag post.photo_url(:thumb) %>
+  <% else %>
+    No photo available
+  <% end %>
+</p>
 
 </div>
