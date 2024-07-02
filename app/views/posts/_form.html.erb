@@ -12,23 +12,13 @@
   <% end %>
 
   <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+    <%= form.label :text, style: "display: block" %>
+    <%= form.text_field :text %>
   </div>
 
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_area :description %>
-  </div>
-
-  <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.text_field :user_id %>
-  </div>
-
-  <div>
-    <%= form.label :photo_data, style: "display: block" %>
-    <%= form.text_area :photo_data %>
+  <div class="field">
+    <%= form.label :photo %>
+    <%= form.file_field :photo %>
   </div>
 
   <div>
