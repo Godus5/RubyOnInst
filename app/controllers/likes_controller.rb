@@ -1,58 +1,33 @@
 class LikesController < ApplicationController
-  before_action :set_like, only: %i[ show edit update destroy ]
-
-  # GET /likes
-  def index
-    @likes = Like.all
-  end
-
-  # GET /likes/1
-  def show
-  end
-
-  # GET /likes/new
-  def new
-    @like = Like.new
-  end
-
-  # GET /likes/1/edit
-  def edit
-  end
+  before_action :set_post
 
   # POST /likes
   def create
-    @like = Like.new(like_params)
+    like = @post.likes.find_or_initialize_by(user: current_account.user)
+    like.value = params[:value]
 
-    if @like.save
-      redirect_to @like, notice: "Like was successfully created."
+    if like.save
+      redirect_to @post, notice: "Your feedback has been recorded."
     else
-      render :new, status: :unprocessable_entity
+      redirect_to @post, alert: like.errors.full_messages.join(", ")
     end
   end
 
-  # PATCH/PUT /likes/1
-  def update
-    if @like.update(like_params)
-      redirect_to @like, notice: "Like was successfully updated.", status: :see_other
-    else
-      render :edit, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /likes/1
-  def destroy
-    @like.destroy!
-    redirect_to likes_url, notice: "Like was successfully destroyed.", status: :see_other
-  end
+  # # DELETE /likes/1
+  # def destroy
+  #   @like.destroy!
+  #   redirect_to likes_url, notice: "Like was successfully destroyed.", status: :see_other
+  # end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_like
-      @like = Like.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def like_params
-      params.require(:like).permit(:post_id, :user_id, :value)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_post
+    @post = Post.find(params[:post_id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def like_params
+    params.require(:like).permit(:value)
+  end
 end
