@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :posts
+  resources :posts do
+    resources :comments, only: [:create, :destroy]
+  end
   resources :users
   devise_for :accounts, controllers: {registrations: "registrations"}
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -13,5 +15,5 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", :as => :pwa_manifest
 
   # Defines the root path route ("/")
-  root "users#index"
+  root "posts#index"
 end

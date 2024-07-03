@@ -6,3 +6,26 @@
 
   <%= button_to "Destroy this post", @post, method: :delete %>
 </div>
+
+<h3>Comments</h3>
+<%= form_with(model: [ @post, Comment.new ], local: true) do |form| %>
+  <div class="field">
+    <%= form.label :text %>
+    <%= form.text_area :text %>
+  </div>
+  <div class="actions">
+    <%= form.submit "Add Comment" %>
+  </div>
+<% end %>
+
+<ul>
+  <% @post.comments.each do |comment| %>
+    <li>
+      <strong><%= comment.user.first_name %>:</strong>
+      <%= comment.text %>
+      <% if comment.user == current_account.user %>
+        <%= button_to 'Delete', [@post, comment], method: :delete %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
