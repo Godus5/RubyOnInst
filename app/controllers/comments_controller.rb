@@ -1,48 +1,22 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only: %i[ show edit update destroy ]
-
-  # GET /comments
-  def index
-    @comments = Comment.all
-  end
-
-  # GET /comments/1
-  def show
-  end
-
-  # GET /comments/new
-  def new
-    @comment = Comment.new
-  end
-
-  # GET /comments/1/edit
-  def edit
-  end
+  before_action :set_comment, only: %i[ destroy ]
+  before_action :authorize_comment_owner, only: [:destroy]
 
   # POST /comments
   def create
-    @comment = Comment.new(comment_params)
-
+    @post = Post.find(params[:post_id])
+    @comment = @post.comments.build(comment_params)
     if @comment.save
-      redirect_to @comment, notice: "Comment was successfully created."
+      redirect_to @post, notice: 'Comment was successfully created.'
     else
-      render :new, status: :unprocessable_entity
-    end
-  end
-
-  # PATCH/PUT /comments/1
-  def update
-    if @comment.update(comment_params)
-      redirect_to @comment, notice: "Comment was successfully updated.", status: :see_other
-    else
-      render :edit, status: :unprocessable_entity
+      redirect_to @post, alert: 'There was an error creating your comment.'
     end
   end
 
   # DELETE /comments/1
   def destroy
     @comment.destroy!
-    redirect_to comments_url, notice: "Comment was successfully destroyed.", status: :see_other
+    redirect_to @comment.post, notice: "Comment was successfully destroyed."
   end
 
   private
@@ -53,6 +27,13 @@ class CommentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comment_params
-      params.require(:comment).permit(:text, :post_id, :user_id)
+      params.require(:comment).permit(:text, :post_id).merge(user_id: current_account.user.id)
     end
+
+    def authorize_comment_owner
+      unless @comment.user == current_account.user
+        redirect_to @comment.post, alert: 'You are not authorized to delete this comment.'
+      end
+    end
+  
 end
