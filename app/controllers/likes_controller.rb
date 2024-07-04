@@ -3,21 +3,22 @@ class LikesController < ApplicationController
 
   # POST /likes
   def create
-    like = @post.likes.find_or_initialize_by(user: current_account.user)
-    like.value = params[:value]
+    @like = @post.likes.find_or_initialize_by(user: current_account.user)
+    @like.value = params[:value]
 
-    if like.save
+    if @like.save
       redirect_to @post, notice: "Your feedback has been recorded."
     else
       redirect_to @post, alert: like.errors.full_messages.join(", ")
     end
   end
 
-  # # DELETE /likes/1
-  # def destroy
-  #   @like.destroy!
-  #   redirect_to likes_url, notice: "Like was successfully destroyed.", status: :see_other
-  # end
+  # DELETE /likes/1
+  def destroy
+    @like = @post.likes.find_by(user: current_account.user)
+    @like.destroy!
+    redirect_to @post, notice: "Like was successfully destroyed."
+  end
 
   private
 
