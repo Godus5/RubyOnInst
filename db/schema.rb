@@ -77,7 +77,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_07_04_132342) do
   add_foreign_key "likes", "posts"
   add_foreign_key "likes", "users"
   add_foreign_key "posts", "users"
-  add_foreign_key "subscriptions", "followers"
   add_foreign_key "subscriptions", "users"
+  add_foreign_key "subscriptions", "users", column: "follower_id"
   add_foreign_key "users", "accounts"
 end

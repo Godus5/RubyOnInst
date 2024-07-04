@@ -6,3 +6,11 @@
 
   <%= button_to "Destroy this user", @user, method: :delete %>
 </div>
+
+<% if @user != current_account.user %>
+  <% if current_account.user.following.include?(@user) %>
+    <%= button_to 'Отписаться', user_subscription_path(@user), method: :delete, class: 'btn btn-warning' %>
+  <% else %>
+    <%= button_to 'Подписаться', user_subscription_path(@user), method: :post, class: 'btn btn-primary' %>
+  <% end %>
+<% end %>

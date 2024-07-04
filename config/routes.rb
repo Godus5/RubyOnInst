@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
-  resources :subscriptions
   resources :posts do
     resources :comments, only: [:create, :destroy]
     resources :likes, only: [:create, :destroy]
   end
-  resources :users
+  resources :users do
+    resource :subscription, only: [:create, :destroy]
+  end
   devise_for :accounts, controllers: {registrations: "registrations"}
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

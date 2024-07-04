@@ -1,58 +1,19 @@
 class SubscriptionsController < ApplicationController
-  before_action :set_subscription, only: %i[ show edit update destroy ]
-
-  # GET /subscriptions
-  def index
-    @subscriptions = Subscription.all
-  end
-
-  # GET /subscriptions/1
-  def show
-  end
-
-  # GET /subscriptions/new
-  def new
-    @subscription = Subscription.new
-  end
-
-  # GET /subscriptions/1/edit
-  def edit
-  end
-
   # POST /subscriptions
   def create
-    @subscription = Subscription.new(subscription_params)
-
-    if @subscription.save
-      redirect_to @subscription, notice: "Subscription was successfully created."
+    user = User.find(params[:user_id])
+    subscription = current_account.user.reverse_subscriptions.build(user: user)
+    if subscription.save
+      redirect_to user_path(user), notice: "You have successfully subscribed to the user."
     else
-      render :new, status: :unprocessable_entity
-    end
-  end
-
-  # PATCH/PUT /subscriptions/1
-  def update
-    if @subscription.update(subscription_params)
-      redirect_to @subscription, notice: "Subscription was successfully updated.", status: :see_other
-    else
-      render :edit, status: :unprocessable_entity
+      redirect_to user_path(user), alert: "Error when subscribing."
     end
   end
 
   # DELETE /subscriptions/1
   def destroy
-    @subscription.destroy!
-    redirect_to subscriptions_url, notice: "Subscription was successfully destroyed.", status: :see_other
+    user = User.find(params[:user_id])
+    current_account.user.following.delete(user)
+    redirect_to user_path(user), notice: "You have successfully unfollowed the user."
   end
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_subscription
-      @subscription = Subscription.find(params[:id])
-    end
-
-    # Only allow a list of trusted parameters through.
-    def subscription_params
-      params.require(:subscription).permit(:follower_id, :user_id)
-    end
 end
