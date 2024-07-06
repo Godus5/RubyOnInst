@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[show edit update destroy]
+  before_action :user_exist
 
   # GET /posts
   def index
@@ -64,6 +65,12 @@ class PostsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_post
     @post = Post.find(params[:id])
+  end
+
+  def user_exist
+    unless current_account.user
+      redirect_to new_user_path, alert: "To continue working on the site, you need to create your own page."
+    end
   end
 
   # Only allow a list of trusted parameters through.

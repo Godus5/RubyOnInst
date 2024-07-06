@@ -40,7 +40,7 @@
       <strong><%= comment.user.nickname %>:</strong>
       <%= comment.text %>
       <% if comment.user == current_account.user %>
-        <%= button_to 'Delete', [@post, comment], method: :delete %>
+        <%= button_to 'Delete', [@post, comment], method: :delete%>
       <% end %>
     </li>
   <% end %>

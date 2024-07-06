@@ -3,7 +3,7 @@
 <h1>Posts</h1>
 <%= link_to "New post", new_post_path %>
 
-<% unless @posts.nil? %>
+<% if @posts %>
   <div id="posts">
     <% @posts.each do |post| %>
       <%= render post %>
