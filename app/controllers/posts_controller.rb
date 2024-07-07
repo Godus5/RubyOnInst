@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[show edit update destroy]
   before_action :user_exist
+  before_action :post_owner, only: %i[edit update destroy]
 
   # GET /posts
   def index
@@ -70,6 +71,12 @@ class PostsController < ApplicationController
   def user_exist
     unless current_account.user
       redirect_to new_user_path, alert: "To continue working on the site, you need to create your own page."
+    end
+  end
+
+  def post_owner
+    unless @post.user == current_account.user
+      redirect_to @post, alert: "You are not the owner of this post."
     end
   end
 

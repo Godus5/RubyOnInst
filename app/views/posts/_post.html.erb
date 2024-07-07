@@ -1,6 +1,6 @@
 <div id="<%= dom_id post %>">
   <p>
-    <%= link_to "#{post.user.nickname}", post.user %>
+    <%= link_to post.user.nickname, post.user %>
   </p>
 
   <p>    
@@ -9,8 +9,7 @@
 
   <% if post.photo %>
     <p>
-      <strong>Photo:</strong>      
-        <%= image_tag post.photo_url(:thumb) %>      
+      <%= image_tag post.photo_url(:thumb) %>
     </p>
   <% end %>
 </div>

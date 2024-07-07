@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
+  before_action :user_exist, only: %i[new create]
 
   # GET /users/1
   def show
@@ -53,6 +54,12 @@ class UsersController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def user_exist
+    unless current_account.user.nil?
+      redirect_to root_path, alert: "Your profile already exists for your account."
+    end
   end
 
   # Only allow a list of trusted parameters through.

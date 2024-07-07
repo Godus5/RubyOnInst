@@ -12,16 +12,18 @@
 
 <p><strong>Likes: <%= @post.total_likes %></strong></p>
 
-<% if @post.likes.find_by(user: current_account.user)&.value == 1 %>
-  <%= button_to 'Like', post_like_path(@post), method: :delete %>
-  <%= button_to 'Dislike', post_likes_path(@post, value: -1), method: :post %>
-<% elsif @post.likes.find_by(user: current_account.user)&.value == -1 %>
-  <%= button_to 'Like', post_likes_path(@post, value: 1), method: :post %>
-  <%= button_to 'Dislike', post_like_path(@post), method: :delete %>
-<% else %>
-  <%= button_to 'Like', post_likes_path(@post, value: 1), method: :post %>
-  <%= button_to 'Dislike', post_likes_path(@post, value: -1), method: :post %>
-<% end %>
+<div style="display: flex; gap: 10px;">
+  <% if @post.likes.find_by(user: current_account.user)&.value == 1 %>
+    <%= button_to 'Like', post_like_path(@post), method: :delete %>
+    <%= button_to 'Dislike', post_likes_path(@post, value: -1), method: :post %>
+  <% elsif @post.likes.find_by(user: current_account.user)&.value == -1 %>
+    <%= button_to 'Like', post_likes_path(@post, value: 1), method: :post %>
+    <%= button_to 'Dislike', post_like_path(@post), method: :delete %>
+  <% else %>
+    <%= button_to 'Like', post_likes_path(@post, value: 1), method: :post %>
+    <%= button_to 'Dislike', post_likes_path(@post, value: -1), method: :post %>
+  <% end %>
+</div>
 
 <h3>Comments</h3>
 <%= form_with(model: [ @post, Comment.new ], local: true) do |form| %>
