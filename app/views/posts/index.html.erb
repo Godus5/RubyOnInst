@@ -1,14 +1,31 @@
+<div style="display: flex; gap: 10px; margin-top: 60px;"> 
+  Welcome, <%= link_to current_account.user.nickname, current_account.user %>
+  <%= button_to 'Sign Out', destroy_account_session_path, method: :delete %>
+</div>
+
 <% content_for :title, "Posts" %>
 
 <h1>Posts</h1>
+<%= link_to "New post", new_post_path %>
 
-<div id="posts">
-  <% @posts.each do |post| %>
-    <%= render post %>
+<% if @posts %>
+  <div id="posts">
+    <% @posts.each do |post| %>
+      <%= render post %>
+      <p>
+        <%= link_to "Show this post", post %>
+      </p>
+    <% end %>
+  </div>
+<% end %>
+
+<% unless User.where.not(id: current_account.user.id).empty? %>
+  <h3> Other users </h3>
+  <% User.where.not(id: current_account.user.id).each do |user| %>
     <p>
-      <%= link_to "Show this post", post %>
+      <%= link_to user.nickname, user %>
     </p>
   <% end %>
-</div>
+<% end%>
 
-<%= link_to "New post", new_post_path %>
+  

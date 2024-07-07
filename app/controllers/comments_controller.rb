@@ -1,6 +1,5 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: %i[destroy]
-  before_action :authorize_comment_owner, only: [:destroy]
 
   # POST /comments
   def create
@@ -23,17 +22,14 @@ class CommentsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_comment
+    unless @comment.user == current_account.user
+      redirect_to @comment.post, alert: "You are not authorized to delete this comment."
+    end
     @comment = Comment.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
   def comment_params
     params.require(:comment).permit(:text, :post_id).merge(user_id: current_account.user.id)
-  end
-
-  def authorize_comment_owner
-    unless @comment.user == current_account.user
-      redirect_to @comment.post, alert: "You are not authorized to delete this comment."
-    end
   end
 end

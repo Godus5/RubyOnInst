@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
+  # Defines the root path route ("/")
+  root "posts#index"
+
   resources :posts do
     resources :comments, only: [:create, :destroy]
     resources :likes, only: [:create, :destroy]
   end
-  resources :users do
+  resources :users, except: :index do
     resource :subscription, only: [:create, :destroy]
   end
   devise_for :accounts, controllers: {registrations: "registrations"}
@@ -16,7 +19,4 @@ Rails.application.routes.draw do
   # Render dynamic PWA files from app/views/pwa/*
   get "service-worker" => "rails/pwa#service_worker", :as => :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", :as => :pwa_manifest
-
-  # Defines the root path route ("/")
-  root "posts#index"
 end

@@ -1,16 +1,30 @@
 <%= render @user %>
 
-<div>
-  <%= link_to "Edit this user", edit_user_path(@user) %> |
-  <%= link_to "Back to users", users_path %>
-
-  <%= button_to "Destroy this user", @user, method: :delete %>
-</div>
-
-<% if @user != current_account.user %>
+<% unless @user == current_account.user %>
   <% if current_account.user.following.include?(@user) %>
     <%= button_to 'Отписаться', user_subscription_path(@user), method: :delete, class: 'btn btn-warning' %>
   <% else %>
     <%= button_to 'Подписаться', user_subscription_path(@user), method: :post, class: 'btn btn-primary' %>
   <% end %>
+<% end %>
+
+<div>
+  <%= link_to "Back to posts", root_path %>
+  <% if @user == current_account.user %>    
+    | <%= link_to "Edit this user", edit_user_path(@user) %>
+    
+
+    <%= button_to "Destroy this user", @user, method: :delete %>
+  <% end %>
+</div>
+
+<% if @user.posts %>
+  <div id="posts">
+    <% @user.posts.order(created_at: :desc).each do |post| %>
+      <%= render post %>
+      <p>
+        <%= link_to "Show this post", post %>
+      </p>
+    <% end %>
+  </div>
 <% end %>
