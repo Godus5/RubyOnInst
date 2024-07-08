@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
-  before_action :user_exist, only: %i[new create]
+  before_action :user_already_exist, only: %i[new create]
 
   # GET /users/1
   def show
@@ -56,7 +56,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  def user_exist
+  def user_already_exist
     unless current_account.user.nil?
       redirect_to root_path, alert: "Your profile already exists for your account."
     end
