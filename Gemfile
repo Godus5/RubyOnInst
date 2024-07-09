@@ -48,11 +48,11 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
-  
-  gem 'factory_bot_rails'
-  gem 'ffaker'
-  gem 'rspec-rails', '~> 6.1.0'
-  
+
+  gem "factory_bot_rails"
+  gem "ffaker"
+  gem "rspec-rails", "~> 6.1.0"
+
   gem "pry", "~> 0.14.2"
 end
 
@@ -65,4 +65,5 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem "simplecov", require: false
 end
