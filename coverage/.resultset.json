@@ -155,6 +155,48 @@
           null
         ]
       },
+      "/home/anton/git/projects/RubyOnInst/app/controllers/likes_controller.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          null,
+          1,
+          2,
+          2,
+          null,
+          2,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          3,
+          null,
+          null
+        ]
+      },
+      "/home/anton/git/projects/RubyOnInst/app/controllers/application_controller.rb": {
+        "lines": [
+          1,
+          null,
+          null,
+          1,
+          null
+        ]
+      },
       "/home/anton/git/projects/RubyOnInst/app/controllers/posts_controller.rb": {
         "lines": [
           1,
@@ -235,15 +277,6 @@
           1,
           5,
           null,
-          null
-        ]
-      },
-      "/home/anton/git/projects/RubyOnInst/app/controllers/application_controller.rb": {
-        "lines": [
-          1,
-          null,
-          null,
-          1,
           null
         ]
       },
@@ -380,46 +413,6 @@
         "branches": {
         }
       },
-      "/home/anton/git/projects/RubyOnInst/app/controllers/likes_controller.rb": {
-        "lines": [
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
       "/home/anton/git/projects/RubyOnInst/app/controllers/registrations_controller.rb": {
         "lines": [
           0,
@@ -490,6 +483,6 @@
         }
       }
     },
-    "timestamp": 1720609811
+    "timestamp": 1720623688
   }
 }

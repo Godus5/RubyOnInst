@@ -66,7 +66,7 @@ RSpec.describe "Users", type: :request do
   describe "POST create" do
     context "creating a record with valid values" do
       let(:valid_params) do
-        {user: {first_name: "first name", last_name: "last name", nickname: "Godus"}}
+        { user: { first_name: "first name", last_name: "last name", nickname: "Godus" } }
       end
       subject { post users_path, params: valid_params }
 
@@ -77,7 +77,7 @@ RSpec.describe "Users", type: :request do
     end
 
     context "creating a record with invalid values" do
-      let(:invalid_params) { {user: {first_name: "", last_name: "last name", nickname: "Godus"}} }
+      let(:invalid_params) { { user: { first_name: "", last_name: "last name", nickname: "Godus" } } }
       subject { post users_path, params: invalid_params }
 
       it "the number of records does not increase and the page with the creation form will be rendered again", :aggregate_failures do
@@ -92,7 +92,7 @@ RSpec.describe "Users", type: :request do
 
     context "updating a record with valid data entered" do
       let(:valid_params) do
-        {user: {first_name: "Anton"}}
+        { user: { first_name: "Anton" } }
       end
       subject { patch user_path(user), params: valid_params }
 
@@ -103,7 +103,7 @@ RSpec.describe "Users", type: :request do
 
     context "updating a record with invalid data entered" do
       let(:invalid_params) do
-        {user: {first_name: ""}}
+        { user: { first_name: "" } }
       end
       subject { patch user_path(user), params: invalid_params }
 
@@ -116,7 +116,7 @@ RSpec.describe "Users", type: :request do
       let!(:another_account) { create(:account) }
       let!(:another_user) { create(:user, account: another_account) }
       let(:valid_params) do
-        {user: {first_name: "Anton"}}
+        { user: { first_name: "Anton" } }
       end
       subject { patch user_path(user), params: valid_params }
 

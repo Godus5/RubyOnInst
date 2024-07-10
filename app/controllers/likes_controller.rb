@@ -9,7 +9,7 @@ class LikesController < ApplicationController
     if @like.save
       redirect_to @post, notice: "Your feedback has been recorded."
     else
-      redirect_to @post, alert: like.errors.full_messages.join(", ")
+      redirect_to @post, alert: @like.errors.full_messages.join(", ")
     end
   end
 
@@ -25,10 +25,5 @@ class LikesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_post
     @post = Post.find(params[:post_id])
-  end
-
-  # Only allow a list of trusted parameters through.
-  def like_params
-    params.require(:like).permit(:value)
   end
 end
