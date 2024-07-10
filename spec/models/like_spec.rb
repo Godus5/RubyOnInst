@@ -27,4 +27,15 @@ RSpec.describe Like, type: :model do
       end
     end
   end
+
+  describe "#total_likes" do
+    let!(:like) { create(:like, user: user, post: post) }
+    subject { post.total_likes }
+
+    context "all likes are counted" do
+      it "returns the sum of the value attributes of all Like model entries of a specific post" do
+        expect(subject).to eq(like.value)
+      end
+    end
+  end
 end

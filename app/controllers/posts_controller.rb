@@ -40,25 +40,17 @@ class PostsController < ApplicationController
 
   # PATCH/PUT /posts/1
   def update
-    if @post.user == current_account.user
-      if @post.update(post_params)
-        redirect_to @post, notice: "Post was successfully updated."
-      else
-        render :edit, status: :unprocessable_entity
-      end
+    if @post.update(post_params)
+      redirect_to @post, notice: "Post was successfully updated."
     else
-      redirect_to @post, alert: "You are not the owner of this post."
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /posts/1
   def destroy
-    if @post.user == current_account.user
-      @post.destroy!
-      redirect_to posts_url, notice: "Post was successfully destroyed.", status: :see_other
-    else
-      redirect_to @post, alert: "You are not the owner of this post."
-    end
+    @post.destroy!
+    redirect_to posts_url, notice: "Post was successfully destroyed.", status: :see_other
   end
 
   private

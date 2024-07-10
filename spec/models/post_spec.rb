@@ -5,7 +5,7 @@ RSpec.describe Post, type: :model do
   let!(:user) { create(:user, account: account) }
 
   describe "validations" do
-    subject { Post.new(text:, photo: nil, user_id: user.id).valid? }
+    subject { Post.new(text:, user_id: user.id).valid? }
 
     context "creating a new record with valid attributes" do
       let(:text) { FFaker::Lorem.paragraph }
