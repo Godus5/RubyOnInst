@@ -94,7 +94,7 @@ RSpec.describe "Posts", type: :request do
     context "creating a record with valid values" do
       let!(:user) { create(:user, account: account) }
       let(:valid_params) do
-        { post: { text: "I like ruby!", user_id: user.id } }
+        {post: {text: "I like ruby!", user_id: user.id}}
       end
 
       subject { post posts_path, params: valid_params }
@@ -105,10 +105,28 @@ RSpec.describe "Posts", type: :request do
       end
     end
 
+    context "creating a record with an image" do
+      let!(:user) { create(:user, account: account) }
+      let(:image_path) { Rails.root.join("spec/fixtures/files/test_image.jpg") }
+      let(:image_file) { Rack::Test::UploadedFile.new(image_path, "image/jpeg") }
+      let(:valid_params_with_image) do
+        {post: {text: "I like ruby!", user_id: user.id, photo: image_file}}
+      end
+
+      subject { post posts_path, params: valid_params_with_image }
+
+      it "creates a post with an image and generates a thumbnail", :aggregate_failures do
+        expect { subject }.to change(Post, :count).by(1)
+        expect(Post.last.photo[:original]).to be_present
+        expect(Post.last.photo[:thumb]).to be_present
+        expect(subject).to redirect_to(post_path(Post.last.id))
+      end
+    end
+
     context "creating a record with invalid values" do
       let!(:user) { create(:user, account: account) }
       let(:invalid_params) do
-        { post: { text: "", user_id: user.id } }
+        {post: {text: "", user_id: user.id}}
       end
 
       subject { post posts_path, params: invalid_params }
@@ -121,7 +139,7 @@ RSpec.describe "Posts", type: :request do
 
     context "executing a query with a non-existent user" do
       let(:params) do
-        { post: { text: "I like ruby!", user_id: nil } }
+        {post: {text: "I like ruby!", user_id: nil}}
       end
 
       subject { post posts_path, params: params }
@@ -137,7 +155,7 @@ RSpec.describe "Posts", type: :request do
       let!(:user) { create(:user, account: account) }
       let!(:post) { create(:post, user: user) }
       let(:valid_params) do
-        { post: { text: "I like ruby!" } }
+        {post: {text: "I like ruby!"}}
       end
 
       subject { patch post_path(post), params: valid_params }
@@ -151,7 +169,7 @@ RSpec.describe "Posts", type: :request do
       let!(:user) { create(:user, account: account) }
       let!(:post) { create(:post, user: user) }
       let(:invalid_params) do
-        { post: { text: "" } }
+        {post: {text: ""}}
       end
 
       subject { patch post_path(post), params: invalid_params }
@@ -168,7 +186,7 @@ RSpec.describe "Posts", type: :request do
       let!(:post) { create(:post, user: another_user) }
 
       let(:valid_params) do
-        { post: { text: "I like ruby!" } }
+        {post: {text: "I like ruby!"}}
       end
 
       subject { patch post_path(post), params: valid_params }
@@ -189,7 +207,7 @@ RSpec.describe "Posts", type: :request do
       let!(:another_user) { create(:user, account: another_account) }
       let!(:post) { create(:post, user: another_user) }
       let(:valid_params) do
-        { post: { text: "I like ruby!" } }
+        {post: {text: "I like ruby!"}}
       end
 
       subject { patch post_path(post), params: valid_params }

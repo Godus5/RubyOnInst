@@ -4,9 +4,8 @@ class LikesController < ApplicationController
   # POST /likes
   def create
     @like = @post.likes.find_or_initialize_by(user: current_account.user)
-    @like.value = params[:value]
 
-    if @like.save
+    if @like.update(like_params)
       redirect_to @post, notice: "Your feedback has been recorded."
     else
       redirect_to @post, alert: @like.errors.full_messages.join(", ")
@@ -25,5 +24,9 @@ class LikesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_post
     @post = Post.find(params[:post_id])
+  end
+
+  def like_params
+    params.require(:like).permit(:value)
   end
 end

@@ -14,17 +14,18 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1
   def destroy
-    @comment.destroy!
-    redirect_to @comment.post, notice: "Comment was successfully destroyed."
+    if @comment.user == current_account.user
+      @comment.destroy!
+      redirect_to @comment.post, notice: "Comment was successfully destroyed."
+    else
+      redirect_to @comment.post, alert: "You are not the creator of this comment."
+    end
   end
 
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_comment
-    unless @comment.user == current_account.user
-      redirect_to @comment.post, alert: "You are not authorized to delete this comment."
-    end
     @comment = Comment.find(params[:id])
   end
 

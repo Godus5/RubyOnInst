@@ -11,7 +11,11 @@ RSpec.describe "Likes", type: :request do
 
   describe "POST create" do
     context "creating a record with valid parameters" do
-      subject { post post_likes_path(user_post), params: {value: 1} }
+      let!(:valid_params) do
+        {like: {value: 1}}
+      end
+
+      subject { post post_likes_path(user_post), params: valid_params }
 
       it "the number of likes will increase by 1 and will be redirected to the created post", :aggregate_failures do
         expect { subject }.to change(Like, :count).by(1)
@@ -20,7 +24,11 @@ RSpec.describe "Likes", type: :request do
     end
 
     context "creating a record with invalid parameters" do
-      subject { post post_likes_path(user_post), params: {value: 0} }
+      let!(:invalid_params) do
+        {like: {value: 0}}
+      end
+
+      subject { post post_likes_path(user_post), params: invalid_params }
 
       it "the number of records does not increase and there will be a redirect to the page being viewed", :aggregate_failures do
         expect { subject }.to_not change(Like, :count)
