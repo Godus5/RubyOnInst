@@ -4,12 +4,11 @@ class LikesController < ApplicationController
   # POST /likes
   def create
     @like = @post.likes.find_or_initialize_by(user: current_account.user)
-    @like.value = params[:value]
 
-    if @like.save
+    if @like.update(like_params)
       redirect_to @post, notice: "Your feedback has been recorded."
     else
-      redirect_to @post, alert: like.errors.full_messages.join(", ")
+      redirect_to @post, alert: @like.errors.full_messages.join(", ")
     end
   end
 
@@ -27,7 +26,6 @@ class LikesController < ApplicationController
     @post = Post.find(params[:post_id])
   end
 
-  # Only allow a list of trusted parameters through.
   def like_params
     params.require(:like).permit(:value)
   end
