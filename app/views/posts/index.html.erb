@@ -6,14 +6,14 @@
 <% content_for :title, "Posts" %>
 
 <h1>Posts</h1>
-<%= link_to "New post", new_post_path %>
+<%= button_to "New post", new_post_path, method: :get %>
 
 <% if @posts %>
   <div id="posts">
     <% @posts.each do |post| %>
       <%= render post %>
       <p>
-        <%= link_to "Show this post", post %>
+        <%= button_to "Show this post", post, method: :get %>
       </p>
     <% end %>
   </div>

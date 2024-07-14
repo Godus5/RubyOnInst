@@ -8,22 +8,23 @@
   <% end %>
 <% end %>
 
-<div>
-  <%= link_to "Back to posts", root_path %>
-  <% if @user == current_account.user %>    
-    | <%= link_to "Edit this user", edit_user_path(@user) %>
+<%= button_to "Back to posts", posts_path, method: :get %>
+<% if @user == current_account.user %>    
+  <div style="display: flex; gap: 10px;">
+    <%= button_to "Edit this user", edit_user_path(@user), method: :get %>
     
 
     <%= button_to "Destroy this user", @user, method: :delete %>
-  <% end %>
-</div>
+  </div>
+<% end %>
+
 
 <% if @user.posts %>
   <div id="posts">
     <% @user.posts.order(created_at: :desc).each do |post| %>
       <%= render post %>
       <p>
-        <%= link_to "Show this post", post %>
+        <%= button_to "Show this post", post, method: :get %>
       </p>
     <% end %>
   </div>

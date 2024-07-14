@@ -1,14 +1,15 @@
 <%= render @post %>
 
-<div>
-  <%= link_to "Back to posts", posts_path %>
-  <% if @post.user == current_account.user %>
-    | <%= link_to "Edit this post", edit_post_path(@post) %>
+<%= button_to "Back to posts", posts_path, method: :get %>
+<% if @post.user == current_account.user %>
+  <div style="display: flex; gap: 10px;">
+    <%= button_to "Edit this post", edit_post_path(@post), method: :get %>
     
 
     <%= button_to "Destroy this post", @post, method: :delete %>
-  <% end %>
-</div>
+  </div>
+<% end %>
+
 
 <p><strong>Likes: <%= @post.total_likes %></strong></p>
 
