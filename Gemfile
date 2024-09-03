@@ -51,7 +51,7 @@ group :development, :test do
 
   gem "factory_bot_rails"
   gem "ffaker"
-  gem "rspec-rails", "~> 6.1.0"
+  gem "rspec-rails", "~> 7.0.1"
   gem "rails-controller-testing"
 
   gem "pry", "~> 0.14.2"
